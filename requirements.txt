@@ -2,3 +2,4 @@ numpy
 streamlit
 openpyxl
 torch
+opencv-python
