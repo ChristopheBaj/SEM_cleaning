@@ -45,7 +45,7 @@ if uploaded_file:
     img_norm = (img_torch - img_torch.min()) / (img_torch.max() - img_torch.min())
 
     # GSR parameters (customize as needed)
-    iterations = st.number_input("GSR Iterations", min_value=100, max_value=10000, value=500, step=100)
+    iterations = st.number_input("GSR Iterations", min_value=100, max_value=10000, value=2500, step=100)
     mu_main = st.number_input("GSR mu[0]", min_value=0.0, max_value=100.0, value=10.0)
     mu_aux = st.number_input("GSR mu[1]", min_value=0.0, max_value=10.0, value=0.1)
     direction = st.selectbox("Stripe Direction", options=["Vertical (1,0,0)", "Horizontal (0,1,0)"], index=0)
