@@ -75,10 +75,17 @@ if uploaded_file:
                 file_name=f"cleaned_{uploaded_file.name}",
                 mime="image/tiff"
             )
+        with col1:
+            st.subheader("Original Image")
+            st.image(img, use_container_width=True, clamp=True)
+        with col2:
+            st.subheader("Cleaned Image")
+            st.image(result_uint8, caption="GSR Cleaned", use_container_width=True, clamp=True)
+            
+            
 
 else:
     st.info("👆 Upload an SEM image to get started.")
 
 st.markdown("---")
 st.markdown("**Tip:** The GSR step is slow for large images. Try cropping or downsampling for testing.")
-
