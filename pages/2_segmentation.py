@@ -2,15 +2,17 @@ import streamlit as st
 import cv2
 import numpy as np
 from PIL import Image
+from skimage import measure
+import pandas as pd
 
-st.title("SEM Image Segmentation (Highest Area Fraction)")
+st.title("SEM Image Segmentation & Region Measurements")
 
 st.markdown("""
 Upload an SEM image. The app will:
-- Apply Otsu thresholding,
-- Show both possible segmentations,
-- Display the one with the highest area fraction (white pixels),
-- Show the area fraction value.
+- Apply Otsu thresholding and select the segmentation with the highest area fraction
+- Display the best segmentation
+- Measure region properties (area, perimeter, eccentricity, centroid, etc.)
+- Show and allow download of the measurements table
 """)
 
 uploaded_file = st.file_uploader("Upload SEM Image", type=['tif', 'tiff', 'png', 'jpg', 'jpeg'])
@@ -33,29 +35,32 @@ if uploaded_file:
         best_mask = mask2
         best_fraction = area_fraction2
 
-    st.subheader("Original Image")
-    st.image(img, use_container_width=True, clamp=True)
-
-    col1, col2 = st.columns(2)
-    with col1:
-        st.write("**Segmentation 1 (area fraction: {:.2f})**".format(area_fraction1))
-        st.image(mask1.astype(np.uint8)*255, use_container_width=True, clamp=True)
-    with col2:
-        st.write("**Segmentation 2 (area fraction: {:.2f})**".format(area_fraction2))
-        st.image(mask2.astype(np.uint8)*255, use_container_width=True, clamp=True)
-
-    st.subheader("Best Segmentation (Highest Area Fraction: {:.2f})".format(best_fraction))
+    st.subheader(f"Best Segmentation (Highest Area Fraction: {best_fraction:.2f})")
     st.image(best_mask.astype(np.uint8)*255, use_container_width=True, clamp=True)
 
-    # Download option
-    from io import BytesIO
-    buf = BytesIO()
-    Image.fromarray((best_mask.astype(np.uint8)*255)).save(buf, format="TIFF")
-    st.download_button(
-        label="Download Best Segmentation",
-        data=buf.getvalue(),
-        file_name=f"segmented_{uploaded_file.name}",
-        mime="image/tiff"
+    # --- Region Measurements ---
+    labels = measure.label(best_mask)
+    props = measure.regionprops_table(
+        labels,
+        properties=[
+            'area', 'perimeter', 'eccentricity', 'centroid',
+            'orientation', 'major_axis_length', 'minor_axis_length'
+        ]
     )
+    features_df = pd.DataFrame(props)
+    features_df['area_fraction'] = np.mean(best_mask)
+
+    st.subheader("Region Measurements Table")
+    st.dataframe(features_df)
+
+    # Download option
+    csv = features_df.to_csv(index=False).encode()
+    st.download_button(
+        label="Download Measurements as CSV",
+        data=csv,
+        file_name=f"segmentation_measurements_{uploaded_file.name}.csv",
+        mime="text/csv"
+    )
+
 else:
     st.info("👆 Upload an SEM image to get started.")
