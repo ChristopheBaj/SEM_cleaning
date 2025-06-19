@@ -1,8 +1,4 @@
 import streamlit as st
-import os
-
-os.environ(['OPENCV_IO_ENABLE_OPENEXR'])=0
-os.environ(['OPENCV_IO_ENABLE_JASPER'])=0
 
 st.set_page_config(
     page_title="SEM Data Cleaning & Segmentation",
