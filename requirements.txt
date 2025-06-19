@@ -1,9 +1,8 @@
-numpy==2.3.0
-streamlit==1.45.1
-openpyxl==3.1.5
-torch==2.7.1
-opencv-python==4.11.0.86
+numpy
+streamlit
+openpyxl
+torch
+opencv-python
 opencv-python-headless
 scikit-image
 opencv-contrib-python
-libgl1
