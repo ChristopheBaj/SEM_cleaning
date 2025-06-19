@@ -1,14 +1,7 @@
-imageio==2.37.0
 matplotlib==3.10.0
-matplotlib-inline==0.1.7
-matplotlib-venn==1.1.1
-natsort==8.4.0
 numpy==1.26.4
 opencv-python==4.11.0.86
-openpnm==3.5.0
 openpyxl==3.1.5
-pandas==2.2.2
-python-utils==3.9.1
 scikit-image==0.24.0
 scikit-learn==1.7.0
 scipy==1.15.1
