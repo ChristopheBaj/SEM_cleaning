@@ -50,11 +50,18 @@ if uploaded_file:
     plt.axis('off')
     st.pyplot(figure)
 
+    # Convert mask to PNG bytes
+    mask_image = Image.fromarray((best_mask * 255).astype(np.uint8))
+    buf = io.BytesIO()
+    mask_image.save(buf, format='PNG')
+    png_bytes = buf.getvalue()
+    
+    # Updated download button
     st.download_button(
         label="Download Segmentation",
-        data=best_mask.astype(np.uint8)*255,
-        file_name="segmentation_.png",
-        mime="png"
+        data=png_bytes,
+        file_name=f"segmentation_{uploaded_file.name}.png",
+        mime="image/png"
     )
 
     # --- Region Measurements ---
