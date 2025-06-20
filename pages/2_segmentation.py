@@ -50,6 +50,13 @@ if uploaded_file:
     plt.axis('off')
     st.pyplot(figure)
 
+    st.download_button(
+        label="Download Segmentation",
+        data=best_mask.astype(np.uint8)*255,
+        file_name=f"segmentation_.png",
+        mime="png"
+    )
+
     # --- Region Measurements ---
     labels = measure.label(best_mask)
     props = measure.regionprops_table(
