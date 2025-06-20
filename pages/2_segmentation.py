@@ -38,8 +38,7 @@ if uploaded_file:
 
     st.subheader(f"Best Segmentation (Highest Area Fraction: {best_fraction:.2f})")
     # Show results
-    fig, ax = plt.subplots()
-    plt.figure(figsize=(12, 5))
+    figure = plt.figure(figsize=(12, 5))
     plt.subplot(1, 2, 1)
     plt.title('Original')
     plt.imshow(img, cmap='gray')
@@ -49,8 +48,7 @@ if uploaded_file:
     plt.title('Segmented (Otsu) Black = Matter, White = Space')
     plt.imshow(best_mask.astype(np.uint8)*255, cmap='gray')
     plt.axis('off')
-    plt.show()
-    # st.pyplot(figure)
+    st.pyplot(figure)
 
     # --- Region Measurements ---
     labels = measure.label(best_mask)
