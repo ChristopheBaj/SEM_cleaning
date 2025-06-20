@@ -5,6 +5,7 @@ from PIL import Image
 from skimage import measure
 import pandas as pd
 import matplotlib.pyplot as plt
+import io
 
 st.title("SEM Image Segmentation & Region Measurements")
 
