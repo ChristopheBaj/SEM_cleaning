@@ -4,6 +4,7 @@ import numpy as np
 from PIL import Image
 from skimage import measure
 import pandas as pd
+import matplotlib.pyplot as plt
 
 st.title("SEM Image Segmentation & Region Measurements")
 
@@ -36,7 +37,20 @@ if uploaded_file:
         best_fraction = area_fraction2
 
     st.subheader(f"Best Segmentation (Highest Area Fraction: {best_fraction:.2f})")
-    st.image(best_mask.astype(np.uint8)*255, use_container_width=True, clamp=True)
+    # Show results
+    fig, ax = plt.subplots()
+    plt.figure(figsize=(12, 5))
+    plt.subplot(1, 2, 1)
+    plt.title('Original')
+    plt.imshow(img, cmap='gray')
+    plt.axis('off')
+    
+    plt.subplot(1, 2, 2)
+    plt.title('Segmented (Otsu) Black = Matter, White = Space')
+    plt.imshow(best_mask.astype(np.uint8)*255, cmap='gray')
+    plt.axis('off')
+    plt.show()
+    st.pyplot(figure)
 
     # --- Region Measurements ---
     labels = measure.label(best_mask)
