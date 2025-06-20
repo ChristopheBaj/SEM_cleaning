@@ -53,8 +53,9 @@ if uploaded_file:
     st.download_button(
         label="Download Segmentation",
         data=best_mask.astype(np.uint8)*255,
-        file_name=f"segmentation_.png",
-        mime="png"
+        file_name="segmentation_.png",
+        mime="png",
+        key='segmentation'
     )
 
     # --- Region Measurements ---
