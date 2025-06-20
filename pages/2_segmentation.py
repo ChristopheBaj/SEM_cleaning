@@ -54,7 +54,7 @@ if uploaded_file:
         label="Download Segmentation",
         data=best_mask.astype(np.uint8)*255,
         file_name="segmentation_.png",
-        mime="png",
+        mime="png"
     )
 
     # --- Region Measurements ---
