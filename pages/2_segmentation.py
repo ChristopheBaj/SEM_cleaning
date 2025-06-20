@@ -50,7 +50,7 @@ if uploaded_file:
     plt.imshow(best_mask.astype(np.uint8)*255, cmap='gray')
     plt.axis('off')
     plt.show()
-    st.pyplot(figure)
+    # st.pyplot(figure)
 
     # --- Region Measurements ---
     labels = measure.label(best_mask)
